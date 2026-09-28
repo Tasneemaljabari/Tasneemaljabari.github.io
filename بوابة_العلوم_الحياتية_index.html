@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="بوابة العلوم الحياتية للمعلمة تسنيم الجعبري للصفوف العاشر والحادي عشر والثاني عشر، ملخصات ودروس وأسئلة تفكير واختبارات تفاعلية.">
+<title>بوابة العلوم الحياتية للمعلمة تسنيم الجعبري</title>
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--text:#172033;--muted:#64748b;--primary:#2563eb;--secondary:#7c3aed;--border:#dbe3ef;--ok:#15803d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.8}
+header{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:34px 18px;text-align:center}
+header h1{margin:0 0 8px;font-size:clamp(25px,5vw,42px)}header p{margin:5px 0}.teacher{display:inline-block;margin-top:12px;padding:7px 16px;border:1px solid rgba(255,255,255,.5);border-radius:999px}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--border);padding:10px 14px}.navin{max-width:1150px;margin:auto;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+button,select,input,textarea{font:inherit}button{border:0;border-radius:12px;padding:10px 15px;cursor:pointer}.navbtn{background:#eef2ff;color:#27358a}.primary{background:var(--primary);color:#fff}.outline{background:#fff;border:1px solid var(--border)}
+main{max-width:1150px;margin:24px auto;padding:0 15px}.toolbar{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;background:#fff;padding:15px;border:1px solid var(--border);border-radius:18px;margin-bottom:20px}
+input,select,textarea{width:100%;border:1px solid var(--border);border-radius:11px;padding:10px;background:#fff;color:var(--text)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:20px;box-shadow:0 5px 18px rgba(30,41,59,.06)}.badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:3px 9px;border-radius:999px;font-size:13px;margin-left:5px}
+.card h2{margin:10px 0 6px;font-size:22px}.muted{color:var(--muted)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+#lesson,#admin{display:none}.lessonhead{background:linear-gradient(135deg,#eff6ff,#f5f3ff);border-radius:18px;padding:22px;margin-bottom:16px}.section{margin:16px 0}.section h3{margin-bottom:6px}
+.facts{display:grid;gap:8px;padding:0;list-style:none}.facts li{background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:9px 12px}
+.q{border:1px solid var(--border);border-radius:14px;padding:14px;margin:12px 0;background:#fff}.q label{display:block;margin:5px 0}.result{font-weight:bold;margin-top:10px;color:var(--ok)}
+.empty{text-align:center;padding:35px;color:var(--muted)}footer{text-align:center;padding:30px;color:var(--muted)}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.full{grid-column:1/-1}
+@media(max-width:700px){.toolbar,.formgrid{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+<body>
+<header><h1>🔬 بوابة العلوم الحياتية</h1><p>ملخصات • أسئلة تفكير • أنشطة • اختبارات تفاعلية</p><div class="teacher">المعلمة تسنيم الجعبري</div></header>
+<nav><div class="navin">
+<button class="navbtn" onclick="showHome()">الرئيسية</button><button class="navbtn" onclick="filterGrade('العاشر')">الصف العاشر</button><button class="navbtn" onclick="filterGrade('الحادي عشر')">الصف الحادي عشر</button><button class="navbtn" onclick="filterGrade('الثاني عشر')">الصف الثاني عشر</button><button class="navbtn" onclick="showAdmin()">⚙️ إدارة المحتوى</button>
+</div></nav>
+<main>
+<section id="home">
+<div class="toolbar"><select id="gradeFilter" onchange="render()"><option value="">كل الصفوف</option><option>العاشر</option><option>الحادي عشر</option><option>الثاني عشر</option></select><select id="subjectFilter" onchange="render()"><option value="">كل المواد</option><option>العلوم الحياتية</option><option>العلوم</option></select><input id="search" oninput="render()" placeholder="🔎 ابحثي عن درس..."></div>
+<div id="cards" class="grid"></div>
+</section>
+<section id="lesson"></section>
+<section id="admin"><div class="card"><h2>⚙️ إدارة محتوى البوابة</h2><p class="muted">أضيفي درسًا جديدًا من الهاتف. البيانات تحفظ في هذا المتصفح.</p>
+<div class="formgrid"><input id="aGrade" placeholder="الصف"><input id="aSubject" value="العلوم الحياتية" placeholder="المبحث"><input id="aTitle" class="full" placeholder="عنوان الدرس"><textarea id="aSummary" class="full" rows="4" placeholder="ملخص الدرس"></textarea><textarea id="aFacts" class="full" rows="4" placeholder="النقاط المهمة، كل نقطة في سطر"></textarea><textarea id="aThink" class="full" rows="4" placeholder="أسئلة التفكير، كل سؤال في سطر"></textarea></div>
+<button class="primary" onclick="addLesson()">➕ إضافة الدرس</button></div></section>
+</main><footer>© بوابة العلوم الحياتية للمعلمة تسنيم الجعبري</footer>
+<script>
+const starter=[
+{grade:"الثاني عشر",subject:"العلوم الحياتية",title:"البناء الضوئي",summary:"عملية حيوية تصنع فيها النباتات الخضراء المواد العضوية من مواد غير عضوية باستخدام الطاقة الضوئية، وتحدث أساسًا في البلاستيدات الخضراء.",facts:["المتفاعلات الأساسية: ثاني أكسيد الكربون والماء.","مصدر الطاقة هو ضوء الشمس.","الكلوروفيل يمتص الطاقة الضوئية.","ينتج الجلوكوز وينطلق الأكسجين.","التفاعلات الضوئية في أغشية الثايلاكويد، ودورة كالفن في السدى."],think:["لماذا يعد البناء الضوئي أساسًا لتدفق الطاقة في الأنظمة البيئية؟","ماذا يحدث لمعدل البناء الضوئي إذا انخفضت شدة الضوء كثيرًا؟","لماذا تحتاج النباتات إلى ثاني أكسيد الكربون؟"],quiz:[["أين توجد معظم جزيئات الكلوروفيل؟",["أغشية الثايلاكويد","النواة","الريبوسومات"],0],["ما الغاز الذي ينطلق خلال البناء الضوئي؟",["ثاني أكسيد الكربون","الأكسجين","النيتروجين"],1],["ما مصدر الطاقة في البناء الضوئي؟",["ضوء الشمس","الجلوكوز","الماء"],0]]},
+{grade:"العاشر",subject:"العلوم الحياتية",title:"المجاهر",summary:"أجهزة تساعد على رؤية الأجسام والتراكيب الدقيقة التي لا يمكن رؤيتها بوضوح بالعين المجردة.",facts:["المجهر الضوئي يستخدم الضوء والعدسات.","من أجزائه العدسات العينية والشيئية ومنصة العينة.","يمكن مشاهدة خلايا البصل تحت المجهر."],think:["لماذا نبدأ الفحص عادةً بالعدسة ذات التكبير الأقل؟","كيف يؤثر التكبير في مجال الرؤية؟"],quiz:[["أي جزء يثبت الشريحة؟",["المنصة","العدسة العينية","المصباح"],0]]},
+{grade:"الحادي عشر",subject:"العلوم الحياتية",title:"الغلايكوجين والسليلوز والكايتين",summary:"ثلاثة عديدات سكر تختلف في البنية والروابط والتفرع والوظيفة.",facts:["الغلايكوجين مخزن للطاقة في الحيوانات.","السليلوز مكوّن بنيوي مهم في جدر الخلايا النباتية.","الكايتين عديد سكر بنيوي يوجد في هياكل بعض الكائنات.","اختلاف نوع الروابط والتفرع يؤثر في البنية والخواص."],think:["كيف يرتبط التفرع بسرعة تعبئة الغلايكوجين؟","لماذا تختلف وظيفة السليلوز عن وظيفة الغلايكوجين رغم كونهما عديدي سكر؟"],quiz:[["أيها مخزن رئيسي للكربوهيدرات في الحيوانات؟",["السليلوز","الغلايكوجين","الكايتين"],1]]}
+];
+let lessons=JSON.parse(localStorage.getItem("tasneemLessons")||"null")||starter;
+function save(){localStorage.setItem("tasneemLessons",JSON.stringify(lessons))}
+function render(){let g=gradeFilter.value,s=subjectFilter.value,q=search.value.trim().toLowerCase();let list=lessons.filter(x=>(!g||x.grade===g)&&(!s||x.subject===s)&&(!q||x.title.toLowerCase().includes(q)||x.summary.toLowerCase().includes(q)));cards.innerHTML=list.length?list.map(x=>`<article class="card"><span class="badge">${x.grade}</span><span class="badge">${x.subject}</span><h2>${x.title}</h2><p class="muted">${x.summary}</p><div class="actions"><button class="primary" onclick="openLesson(${lessons.indexOf(x)})">فتح الدرس</button></div></article>`).join(""):`<div class="empty">لا توجد دروس مطابقة للبحث.</div>`}
+function openLesson(i){let x=lessons[i];home.style.display="none";admin.style.display="none";lesson.style.display="block";lesson.innerHTML=`<div class="lessonhead"><span class="badge">${x.grade}</span><span class="badge">${x.subject}</span><h2>${x.title}</h2><p>${x.summary}</p><button class="outline" onclick="showHome()">← العودة للدروس</button></div><div class="card section"><h3>📌 أهم المعلومات</h3><ul class="facts">${(x.facts||[]).map(v=>`<li>${v}</li>`).join("")}</ul></div><div class="card section"><h3>💡 أسئلة تفكير</h3><ol>${(x.think||[]).map(v=>`<li>${v}</li>`).join("")}</ol></div><div class="card section"><h3>📝 اختبار سريع</h3>${(x.quiz||[]).map((v,j)=>`<div class="q"><b>${j+1}. ${v[0]}</b>${v[1].map((o,k)=>`<label><input type="radio" name="q${j}" value="${k}"> ${o}</label>`).join("")}</div>`).join("")}<button class="primary" onclick="gradeQuiz(${i})">تصحيح الاختبار</button><div id="score" class="result"></div></div>`;scrollTo(0,0)}
+function gradeQuiz(i){let qs=lessons[i].quiz||[],score=0;qs.forEach((v,j)=>{let a=document.querySelector(`input[name="q${j}"]:checked`);if(a&&+a.value===v[2])score++});document.getElementById("score").textContent=`النتيجة: ${score} من ${qs.length}`+(score===qs.length?" 🎉 ممتاز!":"")}
+function showHome(){lesson.style.display="none";admin.style.display="none";home.style.display="block";render();scrollTo(0,0)}
+function showAdmin(){home.style.display="none";lesson.style.display="none";admin.style.display="block";scrollTo(0,0)}
+function filterGrade(g){gradeFilter.value=g;showHome()}
+function addLesson(){let x={grade:aGrade.value.trim(),subject:aSubject.value.trim()||"العلوم الحياتية",title:aTitle.value.trim(),summary:aSummary.value.trim(),facts:aFacts.value.split("\n").map(x=>x.trim()).filter(Boolean),think:aThink.value.split("\n").map(x=>x.trim()).filter(Boolean),quiz:[]};if(!x.grade||!x.title||!x.summary){alert("أضيفي الصف وعنوان الدرس والملخص أولًا.");return}lessons.push(x);save();alert("تمت إضافة الدرس بنجاح.");["aGrade","aTitle","aSummary","aFacts","aThink"].forEach(id=>document.getElementById(id).value="");showHome()}
+render();
+</script>
+</body></html>
