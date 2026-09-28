@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>بوابة العلوم الحياتية للمعلمة تسنيم الجعبري</title>
+<style>
+:root{--bg:#f5f7ff;--surface:#fff;--text:#20253a;--muted:#68708a;--primary:#6258e8;--secondary:#27b99a;--border:#e7e9f3;--soft:#f0efff;--danger:#e95868}
+@media(prefers-color-scheme:dark){:root{--bg:#121522;--surface:#1b2030;--text:#f3f5ff;--muted:#b3bad0;--border:#30364b;--soft:#292648}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:linear-gradient(135deg,#655be8,#25b99a);color:#fff;padding:42px 6%;text-align:center}header h1{margin:0 0 10px;font-size:clamp(25px,4vw,38px)}header p{margin:6px 0;font-size:16px}.top-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+main{max-width:1150px;margin:28px auto;padding:0 18px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}.toolbar>*{flex:1;min-width:180px}select,input,textarea{padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:15px}textarea{width:100%;min-height:100px;resize:vertical}
+button{border:0;border-radius:12px;padding:11px 16px;background:var(--primary);color:#fff;cursor:pointer;font-weight:bold}button.secondary{background:var(--soft);color:var(--primary)}button.danger{background:var(--danger)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}.card,.panel{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:22px;box-shadow:0 8px 24px rgba(30,40,80,.08)}.card h3{margin:8px 0}.badge{display:inline-block;background:var(--soft);color:var(--primary);padding:5px 10px;border-radius:20px;font-size:13px}.card .meta{color:var(--muted);font-size:14px;margin-bottom:15px}.empty{text-align:center;padding:35px;color:var(--muted)}
+#lesson,#admin{display:none}.lesson-head{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;flex-wrap:wrap}.section-title{display:flex;align-items:center;gap:9px}.facts li{margin:9px 0}.question{padding:15px;border:1px solid var(--border);border-radius:14px;margin:10px 0}.callout{background:var(--soft);padding:16px;border-radius:16px;margin:15px 0}.formula{text-align:center;font-size:19px;font-weight:bold;padding:18px;border-radius:16px;background:linear-gradient(135deg,#eef1ff,#e9fff9)}.stage{display:grid;grid-template-columns:1fr 1fr;gap:14px}.stage>div{padding:17px;border:1px solid var(--border);border-radius:16px}.stage h4{margin-top:0;color:var(--primary)}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.manage{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:14px;margin:10px 0}.manage small{color:var(--muted)}footer{text-align:center;color:var(--muted);padding:30px}
+@media(max-width:650px){.stage{grid-template-columns:1fr}.toolbar>*{min-width:100%}}
+</style></head>
+<body>
+<header>
+<h1>🔬 بوابة العلوم الحياتية للمعلمة تسنيم الجعبري</h1>
+<p>ملخصات • مفاهيم • أسئلة تفكير • أوراق عمل • اختبارات تفاعلية</p>
+<p>المرحلة الثانوية: الصف العاشر • الحادي عشر • الثاني عشر</p>
+<div class="top-actions"><button class="secondary" onclick="toggleAdmin()">⚙️ إدارة المحتوى</button></div>
+</header>
+<main>
+<div class="toolbar" id="toolbar">
+<select id="grade" onchange="render()"><option value="all">كل الصفوف</option><option value="10">الصف العاشر</option><option value="11">الصف الحادي عشر</option><option value="12">الصف الثاني عشر</option></select>
+<select id="subject" onchange="render()"><option value="all">كل المواد</option><option value="life">العلوم الحياتية</option></select>
+<input id="search" oninput="render()" placeholder="🔎 ابحثي عن درس...">
+</div>
+<div id="lessons" class="grid"></div>
+<section id="lesson"></section>
+<section id="admin">
+<div class="panel"><h2>⚙️ لوحة المعلمة</h2><div class="callout">أضيفي درسًا جديدًا، ثم سيظهر تلقائيًا في الصف المختار. البيانات تُحفظ في هذا المتصفح.</div>
+<div class="form-grid">
+<div class="field"><label>الصف</label><select id="newGrade"><option value="10">الصف العاشر</option><option value="11">الصف الحادي عشر</option><option value="12">الصف الثاني عشر</option></select></div>
+<div class="field"><label>اسم الدرس</label><input id="newTitle" placeholder="مثال: التنفس الخلوي"></div>
+<div class="field full"><label>ملخص الدرس</label><textarea id="newSummary"></textarea></div>
+<div class="field full"><label>المفاهيم والمعلومات — كل نقطة في سطر</label><textarea id="newFacts"></textarea></div>
+<div class="field full"><label>أسئلة التفكير — كل سؤال في سطر</label><textarea id="newQuestions"></textarea></div>
+<div class="field full"><label>أسئلة الاختبار: السؤال | الإجابة الصحيحة | إجابة بديلة</label><textarea id="newQuiz" placeholder="ما ناتج البناء الضوئي؟ | الجلوكوز والأكسجين | ثاني أكسيد الكربون والماء"></textarea></div>
+</div><p><button onclick="addLesson()">➕ إضافة الدرس</button> <button class="secondary" onclick="clearForm()">مسح</button> <button class="secondary" onclick="toggleAdmin()">العودة للبوابة</button></p></div>
+<div class="panel"><h3>📚 المحتوى الحالي</h3><div id="manageList"></div></div>
+</section>
+</main>
+<footer>بوابة تعليمية تجريبية — إعداد المعلمة تسنيم الجعبري</footer>
+<script>
+const starter=[{grade:'12',title:'البناء الضوئي',summary:'عملية حيوية تحول فيها النباتات الخضراء الطاقة الضوئية إلى طاقة كيميائية مخزنة في المركبات العضوية، باستخدام الماء وثاني أكسيد الكربون وبوجود الكلوروفيل.',facts:['يحدث البناء الضوئي أساسًا في البلاستيدات الخضراء.','الكلوروفيل يمتص الطاقة الضوئية اللازمة للعملية.','الماء مصدر للإلكترونات والبروتونات، وينتج الأكسجين من شطر الماء في التفاعلات الضوئية.','ثاني أكسيد الكربون مصدر الكربون الذي يدخل في تكوين المركبات العضوية.','الجلوكوز الناتج يمكن أن يتحول إلى مركبات عضوية أخرى أو يُخزن على هيئة نشا.','التفاعلات الضوئية تحدث في أغشية الثايلاكويد، بينما تحدث دورة كالفن في الحشوة.'],questions:['فسري لماذا تعد البلاستيدات الخضراء مناسبة للقيام بالبناء الضوئي.','ماذا تتوقعين أن يحدث لمعدل البناء الضوئي عند انخفاض شدة الضوء مع ثبات العوامل الأخرى؟','فسري العلاقة بين توفر ثاني أكسيد الكربون ومعدل تكوين المادة العضوية.','لماذا لا يعد الأكسجين الناتج غذاءً للنبات؟'],quiz:[['أين تحدث التفاعلات الضوئية؟','في أغشية الثايلاكويد','في النواة'],['ما الصبغة الأساسية لامتصاص الضوء؟','الكلوروفيل','الهيموغلوبين'],['ما الغاز الذي يمتصه النبات كمصدر للكربون؟','ثاني أكسيد الكربون','الأكسجين'],['أين تحدث دورة كالفن؟','في حشوة البلاستيدة','في الغشاء النووي']]}];
+let data=JSON.parse(localStorage.getItem('tasneemLifePortal')||'null')||starter;let current=null;
+const gname=g=>({'10':'الصف العاشر','11':'الصف الحادي عشر','12':'الصف الثاني عشر'}[g]||g);
+const lines=id=>document.getElementById(id).value.split('\n').map(x=>x.trim()).filter(Boolean);
+function save(){localStorage.setItem('tasneemLifePortal',JSON.stringify(data));}
+function render(){const g=document.getElementById('grade').value,q=document.getElementById('search').value.trim();const list=data.filter(x=>(g==='all'||x.grade===g)&&x.title.includes(q));document.getElementById('lessons').innerHTML=list.length?list.map((x,i)=>`<article class="card"><span class="badge">${gname(x.grade)}</span><h3>${x.title}</h3><div class="meta">العلوم الحياتية</div><p>${x.summary}</p><button onclick="openLesson(${data.indexOf(x)})">فتح الدرس</button></article>`).join(''):'<div class="panel empty">لا توجد دروس مطابقة حاليًا.</div>';}
+function openLesson(i){current=data[i];document.getElementById('toolbar').style.display='none';document.getElementById('lessons').style.display='none';document.getElementById('admin').style.display='none';const l=document.getElementById('lesson');l.style.display='block';l.innerHTML=`<div class="panel"><div class="lesson-head"><div><span class="badge">${gname(current.grade)} • العلوم الحياتية</span><h2>${current.title}</h2><p>${current.summary}</p></div><button class="secondary" onclick="closeLesson()">← العودة</button></div></div>
+<div class="panel"><h3 class="section-title">🧬 المفاهيم والمعلومات الأساسية</h3><ul class="facts">${current.facts.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+<div class="panel"><h3 class="section-title">☀️ مراحل البناء الضوئي</h3><div class="stage"><div><h4>التفاعلات الضوئية</h4><p>تحدث في أغشية الثايلاكويد، حيث تمتص أصباغ الكلوروفيل الضوء، وتنتج جزيئات ATP وNADPH، وينطلق الأكسجين من شطر الماء.</p></div><div><h4>دورة كالفن</h4><p>تحدث في الحشوة، ويُستخدم فيها ATP وNADPH لتثبيت ثاني أكسيد الكربون وتكوين مركبات عضوية تدخل في بناء السكريات.</p></div></div></div>
+<div class="panel"><h3 class="section-title">⚗️ المعادلة المبسطة</h3><div class="formula">6CO₂ + 6H₂O + طاقة ضوئية ⟶ C₆H₁₂O₆ + 6O₂</div><div class="callout">توضح المعادلة المواد الداخلة والنواتج بصورة كلية، بينما تتم العملية فعليًا عبر سلسلة من التفاعلات والإنزيمات.</div></div>
+<div class="panel"><h3 class="section-title">🧠 أسئلة تفكير ناقد</h3>${current.questions.map(x=>`<div class="question">💡 ${x}</div>`).join('')}</div>
+<div class="panel"><h3 class="section-title">✅ اختبار تفاعلي سريع</h3><div id="quiz">${current.quiz.map((x,i)=>`<div class="question"><b>${i+1}. ${x[0]}</b><br><label><input type="radio" name="q${i}" value="1"> ${x[1]}</label><br><label><input type="radio" name="q${i}" value="0"> ${x[2]}</label></div>`).join('')}</div><button onclick="checkQuiz()">تصحيح الاختبار</button><div id="result" class="callout"></div></div>`;window.scrollTo({top:0,behavior:'smooth'});}
+function closeLesson(){document.getElementById('lesson').style.display='none';document.getElementById('toolbar').style.display='flex';document.getElementById('lessons').style.display='grid';}
+function checkQuiz(){let score=0;current.quiz.forEach((_,i)=>{if(document.querySelector(`input[name=q${i}]:checked`)?.value==='1')score++});document.getElementById('result').textContent=`نتيجتك: ${score} من ${current.quiz.length}`;}
+function toggleAdmin(){const a=document.getElementById('admin');const on=a.style.display!=='block';a.style.display=on?'block':'none';document.getElementById('lessons').style.display=on?'none':'grid';document.getElementById('toolbar').style.display=on?'none':'flex';document.getElementById('lesson').style.display='none';if(on)manage();}
+function addLesson(){const title=document.getElementById('newTitle').value.trim(),summary=document.getElementById('newSummary').value.trim();if(!title||!summary){alert('اكتبي اسم الدرس والملخص أولًا.');return}const quiz=lines('newQuiz').map(x=>x.split('|').map(y=>y.trim())).filter(x=>x.length>=3).map(x=>[x[0],x[1],x[2]]);data.push({grade:document.getElementById('newGrade').value,title,summary,facts:lines('newFacts'),questions:lines('newQuestions'),quiz});save();manage();clearForm();alert('تمت إضافة الدرس بنجاح 🌷');}
+function clearForm(){['newTitle','newSummary','newFacts','newQuestions','newQuiz'].forEach(id=>document.getElementById(id).value='');}
+function manage(){document.getElementById('manageList').innerHTML=data.map((x,i)=>`<div class="manage"><span><b>${x.title}</b><br><small>${gname(x.grade)} • العلوم الحياتية</small></span><button class="danger" onclick="del(${i})">حذف</button></div>`).join('');}
+function del(i){if(confirm('هل تريدين حذف هذا الدرس؟')){data.splice(i,1);save();manage();render();}}
+render();
+</script></body></html>
